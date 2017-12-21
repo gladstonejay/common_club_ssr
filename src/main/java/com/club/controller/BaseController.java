@@ -1,0 +1,45 @@
+package com.club.controller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+/**
+ * 基础controller
+ * Created by shuaizhiguo on 2016/4/13.
+ */
+@Controller
+@SuppressWarnings("all")
+public class BaseController {
+    private static final Logger dbLog = LoggerFactory.getLogger("dbLogger");
+
+    protected static final String CURRENT_USER = "user";
+
+//    public UserBasic getCurrentUser() {
+//        if (null == getSession())
+//            return null;
+//        return (UserBasic) getSession().getAttribute(CURRENT_USER);
+//    }
+
+    public static HttpSession getSession() {
+        HttpSession session = null;
+        try {
+            session = getRequest().getSession();
+        } catch (Exception e) {
+        }
+        return session;
+    }
+
+    public static HttpServletRequest getRequest() {
+        ServletRequestAttributes attrs = (ServletRequestAttributes) RequestContextHolder
+                .getRequestAttributes();
+        return attrs.getRequest();
+    }
+
+
+}
